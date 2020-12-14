@@ -6,7 +6,8 @@ Author:
 """
 
 from flask import Flask, current_app, redirect, url_for
-import requests, json
+import requests
+import json
 
 app = Flask(__name__,
             static_url_path='/python',  # 访问静态资源的url前缀，默认值是static

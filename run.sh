@@ -4,7 +4,6 @@ echo " ----------EE Express RESRfull API Devp--------------"
 NAME=$SERVICE_NAME
 PORT=$SERVICE_PORT  # 6000
 
-
 echo "parameter:$NAME"
 count=`ps -ef|grep $PORT|grep -v grep|wc -l`
 
