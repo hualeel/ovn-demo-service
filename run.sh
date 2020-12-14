@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo " ----------EE Express RESRfull API Devp--------------"
+echo " ----------ENV--------------"
 SERVICE_NAME=$SERVICE_NAME  # kube_ovn_demo_service
 SERVICE_PORT=$SERVICE_PORT  # 6000
 SERVICE_DIR=$SERVICE_DIR    # app

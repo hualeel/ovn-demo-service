@@ -2,12 +2,13 @@
 """
 Author:
 名称：kubeovn demo
-功能描述：h
+功能描述：KUBEOVN DEMO
 """
 
 from flask import Flask, current_app, redirect, url_for
 import requests
 import json
+import os
 
 app = Flask(__name__,
             static_url_path='/python',  # 访问静态资源的url前缀，默认值是static
@@ -50,6 +51,7 @@ def get_pod_ip(svc_name):
 if __name__ == '__main__':
     # 通过url_map可以查看整个flask中的路由信息
     print (app.url_map)
+    service_port = os.getenv("SERVICE_PORT")
 
     # 启动flask程序
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=service_port)
