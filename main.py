@@ -2,7 +2,7 @@
 """
 Author:
 名称：kubeovn demo
-功能描述：
+功能描述：h
 """
 
 from flask import Flask, current_app, redirect, url_for
