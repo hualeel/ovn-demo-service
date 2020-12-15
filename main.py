@@ -68,4 +68,4 @@ if __name__ == '__main__':
     service_port = os.getenv("SERVICE_PORT")
 
     # 启动flask程序
-    app.run(host="0.0.0.0", port=5001)
+    app.run(host="0.0.0.0", port=service_port)
