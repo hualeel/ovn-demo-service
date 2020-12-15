@@ -13,7 +13,6 @@ RUN mkdir -p /$SERVICE_DIR
 COPY . /$SERVICE_DIR
 WORKDIR /$SERVICE_DIR
 
-
 # 添加apk国内源，安装扩展包
 RUN echo "http://mirrors.aliyun.com/alpine/v3.8/main/" > /etc/apk/repositories && \
     echo "http://mirrors.aliyun.com/alpine/v3.8/community" >> /etc/apk/repositories && \

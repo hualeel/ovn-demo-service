@@ -19,7 +19,7 @@ import os
 app = Flask(__name__, template_folder="templates")
 
 
-# 获取pod ip地址
+# 获取pod ip list
 @app.route('/kube-ovn/get-pod-ip/<string:svc_name>', methods=["GET"])
 @cross_origin()
 def get_pod_ip(svc_name):
@@ -49,21 +49,7 @@ def get_pod_ip(svc_name):
     return render_template("index.html", pod_ip_list_str=ip_str)
 
 
-# 获取pod内部信息
-# @app.route('/kube-ovn/get-pod', methods=["GET"])
-# def get_pod(pod_ip):
-#     url = "https://" + pod_ip + "/kube-ovn/get-pod"
-#
-#     payload = {}
-#     headers = {}
-#     response = requests.request("GET", url, headers=headers, data=payload, verify=False)
-#
-#     print(response.text)
-#     return response.text
-
-
 if __name__ == '__main__':
-    # 通过url_map可以查看整个flask中的路由信息
     print (app.url_map)
     service_port = os.getenv("SERVICE_PORT")
 
