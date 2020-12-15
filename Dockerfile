@@ -1,4 +1,4 @@
-FROM registry.cn-qingdao.aliyuncs.com/biz-express/apline-python:v20181229
+FROM FROM alpine:3.7
 MAINTAINER Henry li
 
 # 环境变量
@@ -16,6 +16,7 @@ WORKDIR /$SERVICE_DIR
 # 添加apk国内源，安装扩展包
 RUN echo "http://mirrors.aliyun.com/alpine/v3.8/main/" > /etc/apk/repositories && \
     echo "http://mirrors.aliyun.com/alpine/v3.8/community" >> /etc/apk/repositories && \
+    apk get python2 && \
     pip install -i $PYPI --upgrade pip && \
     pip install -i $PYPI -r requirements.txt && \
     chmod 700 ./run.sh
