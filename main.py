@@ -6,6 +6,7 @@ Author:
 """
 
 from flask import Flask, current_app, redirect, url_for, render_template
+from flask_cors import *
 import requests
 import json
 import os
@@ -20,6 +21,7 @@ app = Flask(__name__, template_folder="templates")
 
 # 获取pod ip地址
 @app.route('/kube-ovn/get-pod-ip/<string:svc_name>', methods=["GET"])
+@cross_origin()
 def get_pod_ip(svc_name):
     k8s_api_server = os.getenv("K8S_API_SERVER")
     k8s_api_auth = os.getenv("K8S_API_AUTH")
@@ -41,23 +43,23 @@ def get_pod_ip(svc_name):
 
     ip_str = ""
     for ip in ip_list:
-        ip_str = ip_str + "   " + ip
+        ip_str = ip_str + ip + ";"
     ip_str = "Pod IP: " + ip_str
 
-    return render_template("index.html", pod_ip_list=ip_str)
+    return render_template("index.html", pod_ip_list_str=ip_str)
 
 
 # 获取pod内部信息
-@app.route('/kube-ovn/get-pod', methods=["GET"])
-def get_pod(pod_ip):
-    url = "https://" + pod_ip + "/kube-ovn/get-pod"
-
-    payload = {}
-    headers = {}
-    response = requests.request("GET", url, headers=headers, data=payload, verify=False)
-
-    print(response.text)
-    return "aa"
+# @app.route('/kube-ovn/get-pod', methods=["GET"])
+# def get_pod(pod_ip):
+#     url = "https://" + pod_ip + "/kube-ovn/get-pod"
+#
+#     payload = {}
+#     headers = {}
+#     response = requests.request("GET", url, headers=headers, data=payload, verify=False)
+#
+#     print(response.text)
+#     return response.text
 
 
 if __name__ == '__main__':
