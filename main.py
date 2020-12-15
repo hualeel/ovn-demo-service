@@ -11,11 +11,6 @@ import requests
 import json
 import os
 
-# app = Flask(__name__,
-#             static_url_path='/python',  # 访问静态资源的url前缀，默认值是static
-#             static_folder='static',  # 静态文件目录，默认就是static
-#             template_folder='templates',  # 模板文件的目录，默认是templates
-#             )
 app = Flask(__name__, template_folder="templates")
 
 
