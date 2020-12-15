@@ -1,7 +1,5 @@
-FROM alpine:3.7
+FROM alpine:latest
 MAINTAINER Henry li
-
-
 # 环境变量
 ENV SERVICE_NAME=ovn_demo_service \
 SERVICE_PORT=5000 \
@@ -15,9 +13,9 @@ COPY . /$SERVICE_DIR
 WORKDIR /$SERVICE_DIR
 
 # 添加apk国内源，安装扩展包
-RUN echo "http://mirrors.aliyun.com/alpine/v3.8/main/" > /etc/apk/repositories && \
-    echo "http://mirrors.aliyun.com/alpine/v3.8/community" >> /etc/apk/repositories && \
-    apk add --no-cache --virtual python2 && \
+RUN echo "http://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories && \
+    echo "http://mirrors.aliyun.com/alpine/latest-stable/community" >> /etc/apk/repositories && \
+    apk add --no-cache --virtual python3 && \
     pip install -i $PYPI --upgrade pip && \
     pip install -i $PYPI -r requirements.txt && \
     chmod 700 ./run.sh
