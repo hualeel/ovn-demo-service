@@ -5,6 +5,7 @@ MAINTAINER Henry li
 ENV SERVICE_NAME=ovn_demo_service \
 SERVICE_PORT=5000 \
 SERVICE_DIR=$SERVIE_NAME \
+
 PYPI=https://mirrors.aliyun.com/pypi/simple/
 
 # 创建工作目录

@@ -3,8 +3,7 @@
 echo " ----------ENV--------------"
 SERVICE_NAME=$SERVICE_NAME  # kube_ovn_demo_service
 SERVICE_PORT=$SERVICE_PORT  # 6000
-SERVICE_DIR=$SERVICE_DIR    # app
-
+SERVICE_DIR=$SERVICE_NAME    #
 
 echo "parameter:$SERVICE_NAME"
 count=`ps -ef|grep $SERVICE_PORT|grep -v grep|wc -l`
