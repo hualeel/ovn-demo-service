@@ -15,12 +15,13 @@ app = Flask(__name__, template_folder="templates")
 
 
 # 获取pod ip list
-@app.route('/get-pod-ip/<string:svc_name>', methods=["GET"])
+@app.route('/get-pod-ip/<string:ns>/<string:svc_name>', methods=["GET"])
 @cross_origin()
-def get_pod_ip(svc_name):
+def get_pod_ip(ns, svc_name):
     k8s_api_server = os.getenv("K8S_API_SERVER")
     k8s_api_auth = os.getenv("K8S_API_AUTH")
-    k8s_namespace = os.getenv("K8S_NAMESPACE")
+    # k8s_namespace = os.getenv("K8S_NAMESPACE")
+    k8s_namespace = ns
 
     url = "https://" + k8s_api_server + ":6443/api/v1/namespaces/" + k8s_namespace + "/endpoints/" + svc_name
 
@@ -41,6 +42,7 @@ def get_pod_ip(svc_name):
     #     ip_str = ip_str + ip + ";"
     # ip_str = "Pod IP: " + ip_str
     # pod_ip_list = ["128.0.0.1", "192.0.0.1"]
+    print(pod_ip_list)
     return render_template("index.html", pod_ip_list=pod_ip_list)
 
 
