@@ -18,10 +18,11 @@
         }
     }
         ;
-        console.log(pod_ip_list)
+
+        console.log(pod_ip_list);
 
         var pod_ip = pod_ip_list[Math.floor((Math.random() * pod_ip_list.length))];
-        console.log(pod_ip)
+        console.log(pod_ip);
 
         if (window.XMLHttpRequest) {
             //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
@@ -34,13 +35,9 @@
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
-
             }
         }
-
-        document.getElementById("myDiv2").innerHTML = pod_ip
-        xmlhttp.open("GET", "http://" + pod_ip + "/kube-ovn/get-pod", true);
-        // xmlhttp.open("GET", "http://" + "127.0.0.1" + ":8001/kube-ovn/get-pod", true);
+        xmlhttp.open("GET", "http://" + pod_ip + ":6002/get-pod", true);
         xmlhttp.send();
     }
 </script>
