@@ -32,18 +32,22 @@ def get_pod_ip(ns, svc_name):
     }
     response = requests.request("GET", url, headers=headers, data=payload, verify=False)
 
-    print(response.text)
-    pod_ip_list = []
-    for item in json.loads(response.text).get("subsets")[0].get("addresses"):
-        pod_ip_list.append(item["ip"])
+    if (response.status_code >= 200) and (response.status_code <= 300):
 
-    # ip_str = ""
-    # for ip in ip_list:
-    #     ip_str = ip_str + ip + ";"
-    # ip_str = "Pod IP: " + ip_str
-    # pod_ip_list = ["128.0.0.1", "192.0.0.1"]
-    print(pod_ip_list)
-    return render_template("index.html", pod_ip_list=pod_ip_list)
+        print(response.text)
+        pod_ip_list = []
+        for item in json.loads(response.text).get("subsets")[0].get("addresses"):
+            pod_ip_list.append(item["ip"])
+
+        # ip_str = ""
+        # for ip in ip_list:
+        #     ip_str = ip_str + ip + ";"
+        # ip_str = "Pod IP: " + ip_str
+        # pod_ip_list = ["128.0.0.1", "192.0.0.1"]
+        print(pod_ip_list)
+        return render_template("index.html", pod_ip_list=pod_ip_list)
+    else:
+        return response.status_code
 
 
 if __name__ == '__main__':
