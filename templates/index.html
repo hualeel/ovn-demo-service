@@ -6,13 +6,23 @@
 <body>
 
 
-<h2> {{pod_ip_list_str}} </h2>
+<h2> {{pod_ip_list|safe}} </h2>
 <div id="myDiv"><h2></h2></div>
-
 <button type="button" onclick="loadXMLDoc()">修改内容</button>
 <script>
     function loadXMLDoc() {
         var xmlhttp;
+        var pod_ip_list = {
+        {
+            pod_ip_list | safe
+        }
+    }
+        ;
+        console.log(pod_ip_list)
+
+        var pod_ip = pod_ip_list[Math.floor((Math.random() * pod_ip_list.length))];
+        console.log(pod_ip)
+
         if (window.XMLHttpRequest) {
             //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
             xmlhttp = new XMLHttpRequest();
@@ -20,15 +30,18 @@
             // IE6, IE5 浏览器执行代码
             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
+
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
 
             }
         }
-        xmlhttp.open("GET", "http://127.0.0.1:8001/kube-ovn/get-pod", true);
+
+        document.getElementById("myDiv2").innerHTML = pod_ip
+        xmlhttp.open("GET", "http://" + pod_ip + "/kube-ovn/get-pod", true);
+        // xmlhttp.open("GET", "http://" + "127.0.0.1" + ":8001/kube-ovn/get-pod", true);
         xmlhttp.send();
-        // console.log(.responseText);
     }
 </script>
 </body>

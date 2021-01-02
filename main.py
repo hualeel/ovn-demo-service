@@ -15,7 +15,7 @@ app = Flask(__name__, template_folder="templates")
 
 
 # 获取pod ip list
-@app.route('/kube-ovn/get-pod-ip/<string:svc_name>', methods=["GET"])
+@app.route('/get-pod-ip/<string:svc_name>', methods=["GET"])
 @cross_origin()
 def get_pod_ip(svc_name):
     k8s_api_server = os.getenv("K8S_API_SERVER")
@@ -32,20 +32,20 @@ def get_pod_ip(svc_name):
     response = requests.request("GET", url, headers=headers, data=payload, verify=False)
 
     print(response.text)
-    ip_list = []
+    pod_ip_list = []
     for item in json.loads(response.text).get("subsets")[0].get("addresses"):
-        ip_list.append(item["ip"])
+        pod_ip_list.append(item["ip"])
 
-    ip_str = ""
-    for ip in ip_list:
-        ip_str = ip_str + ip + ";"
-    ip_str = "Pod IP: " + ip_str
-
-    return render_template("index.html", pod_ip_list_str=ip_str)
+    # ip_str = ""
+    # for ip in ip_list:
+    #     ip_str = ip_str + ip + ";"
+    # ip_str = "Pod IP: " + ip_str
+    # pod_ip_list = ["128.0.0.1", "192.0.0.1"]
+    return render_template("index.html", pod_ip_list=pod_ip_list)
 
 
 if __name__ == '__main__':
-    print (app.url_map)
+    print(app.url_map)
     service_port = os.getenv("SERVICE_PORT")
 
     # 启动flask程序
