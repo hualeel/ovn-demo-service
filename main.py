@@ -19,7 +19,7 @@ app = Flask(__name__, template_folder="templates")
 @app.route('/<string:ns>/<string:svc_name>', methods=["GET"])
 @cross_origin()
 def get_pod_ip(ns, svc_name):
-    k8s_api_server = os.getenv("K8S_API_SERVER")
+    k8s_api_server = os.getenv("py")
     k8s_api_auth = os.getenv("K8S_API_AUTH")
     # k8s_namespace = os.getenv("K8S_NAMESPACE")
     k8s_namespace = ns
@@ -53,10 +53,10 @@ def get_pod_ip(ns, svc_name):
             pod_ip_list_str = each + pod_ip_list_str
 
         # 通过pod ip访问应用
-        url1 = "http://" + pod_id + ":6002/"
+        url1 = "http://" + pod_id + ":6002/get-pod"
         payload1 = {}
         headers1 = {}
-        response1 = requests.request("GET", url1, headers=headers1, data=payload1, verfiy=False)
+        response1 = requests.request("GET", url1, headers=headers1, data=payload1)
 
         if (response1.status_code >= 200) and (response1.status_code <= 300):
             msg_text = pod_ip_list_str + "<br>" + response1.text
