@@ -19,12 +19,10 @@ app = Flask(__name__, template_folder="templates")
 @app.route('/<string:ns>/<string:svc_name>', methods=["GET"])
 @cross_origin()
 def get_pod_ip(ns, svc_name):
-    k8s_api_server = os.getenv("py")
+    k8s_api_server = os.getenv("K8S_API_SERVER")
     k8s_api_auth = os.getenv("K8S_API_AUTH")
-    # k8s_namespace = os.getenv("K8S_NAMESPACE")
-    k8s_namespace = ns
 
-    url = "https://" + k8s_api_server + ":6443/api/v1/namespaces/" + k8s_namespace + "/endpoints/" + svc_name
+    url = "https://" + k8s_api_server + ":6443/api/v1/namespaces/" + ns + "/endpoints/" + svc_name
 
     payload = {}
 
