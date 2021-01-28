@@ -47,10 +47,13 @@ def get_pod_ip(ns, svc_name):
         # pod_ip_list = ["128.0.0.1", "192.0.0.1"]
         print(pod_ip_list)
         pod_id = random.choice(pod_ip_list)
-        pod_ip_list_str = json.dump(pod_ip_list)
+
+        pod_ip_list_str = "  "
+        for each in pod_ip_list:
+            pod_ip_list_str = each + pod_ip_list_str
 
         # 通过pod ip访问应用
-        url1 = "http://" + pod_id + ":6002/"
+        url1 = "http://" + pod_id + ":6001/"
         payload1 = {}
         headers1 = {}
         response1 = requests.request("GET", url1, headers=headers1, data=payload1, verfiy=False)
