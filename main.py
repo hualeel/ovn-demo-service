@@ -48,7 +48,7 @@ def get_pod_ip(ns, svc_name):
         print(pod_ip_list)
         pod_id = random.choice(pod_ip_list)
 
-        pod_ip_list_str = "  "
+        pod_ip_list_str = " ; "
         for each in pod_ip_list:
             pod_ip_list_str = each + pod_ip_list_str
 
