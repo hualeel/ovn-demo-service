@@ -10,6 +10,7 @@ from flask_cors import *
 import requests
 import json
 import os
+import random
 
 app = Flask(__name__, template_folder="templates")
 
@@ -45,9 +46,24 @@ def get_pod_ip(ns, svc_name):
         # ip_str = "Pod IP: " + ip_str
         # pod_ip_list = ["128.0.0.1", "192.0.0.1"]
         print(pod_ip_list)
-        return render_template("index.html", pod_ip_list=pod_ip_list)
+        pod_id = random.choice(pod_ip_list)
+        pod_ip_list_str = json.dump(pod_ip_list)
+
+        # 通过pod ip访问应用
+        url1 = "http://" + pod_id + ":6002/"
+        payload1 = {}
+        headers1 = {}
+        response1 = requests.request("GET", url1, headers=headers1, data=payload1, verfiy=False)
+
+        if (response1.status_code >= 200) and (response1.status_code <= 300):
+            msg_text = pod_ip_list_str + "<br>" + response1.text
+        else:
+            msg_text = response1.status_code
+        # return msg_text
+        # return render_template("index.html", pod_ip_list=pod_ip_list)
     else:
-        return response.status_code
+        msg_text = response.status_code
+    return msg_text
 
 
 if __name__ == '__main__':
