@@ -15,7 +15,7 @@ app = Flask(__name__, template_folder="templates")
 
 
 # 获取pod ip list
-@app.route('/get-pod-ip/<string:ns>/<string:svc_name>', methods=["GET"])
+@app.route('/<string:ns>/<string:svc_name>', methods=["GET"])
 @cross_origin()
 def get_pod_ip(ns, svc_name):
     k8s_api_server = os.getenv("K8S_API_SERVER")
