@@ -21,8 +21,10 @@ app = Flask(__name__, template_folder="templates")
 def get_pod_ip(ns, svc_name):
     k8s_api_server = os.getenv("K8S_API_SERVER")
     k8s_api_auth = os.getenv("K8S_API_AUTH")
+    # k8s_namespace = os.getenv("K8S_NAMESPACE")
+    k8s_namespace = ns
 
-    url = "https://" + k8s_api_server + ":6443/api/v1/namespaces/" + ns + "/endpoints/" + svc_name
+    url = "https://" + k8s_api_server + ":6443/api/v1/namespaces/" + k8s_namespace + "/endpoints/" + svc_name
 
     payload = {}
 
@@ -33,11 +35,10 @@ def get_pod_ip(ns, svc_name):
 
     if (response.status_code >= 200) and (response.status_code <= 300):
 
-        print(response.text)
+        print("1")
         pod_ip_list = []
         for item in json.loads(response.text).get("subsets")[0].get("addresses"):
             pod_ip_list.append(item["ip"])
-
         # ip_str = ""
         # for ip in ip_list:
         #     ip_str = ip_str + ip + ";"
@@ -49,13 +50,17 @@ def get_pod_ip(ns, svc_name):
         pod_ip_list_str = " ; "
         for each in pod_ip_list:
             pod_ip_list_str = each + pod_ip_list_str
+        print("2")
 
         # 通过pod ip访问应用
         url1 = "http://" + pod_id + ":6002/get-pod"
         payload1 = {}
         headers1 = {}
+        print("3")
+        print(pod_id)
         response1 = requests.request("GET", url1, headers=headers1, data=payload1)
-
+        print("----4-------")
+        print(response1)
         if (response1.status_code >= 200) and (response1.status_code <= 300):
             msg_text = pod_ip_list_str + "<br>" + response1.text
         else:
