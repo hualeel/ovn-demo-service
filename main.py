@@ -35,34 +35,27 @@ def get_pod_ip(ns, svc_name):
 
     if (response.status_code >= 200) and (response.status_code <= 300):
 
-        print("1")
         pod_ip_list = []
         for item in json.loads(response.text).get("subsets")[0].get("addresses"):
             pod_ip_list.append(item["ip"])
-        # ip_str = ""
-        # for ip in ip_list:
-        #     ip_str = ip_str + ip + ";"
-        # ip_str = "Pod IP: " + ip_str
-        # pod_ip_list = ["128.0.0.1", "192.0.0.1"]
+
         print(pod_ip_list)
-        pod_id = random.choice(pod_ip_list)
+        pod_ip = random.choice(pod_ip_list)
 
         pod_ip_list_str = " ; "
         for each in pod_ip_list:
             pod_ip_list_str = each + pod_ip_list_str
-        print("2")
 
         # 通过pod ip访问应用
-        url1 = "http://" + pod_id + ":6002/get-pod"
+        url1 = "http://" + pod_ip + ":6002/get-pod"
         payload1 = {}
         headers1 = {}
-        print("3")
-        print(pod_id)
+
         response1 = requests.request("GET", url1, headers=headers1, data=payload1)
-        print("----4-------")
+
         print(response1)
         if (response1.status_code >= 200) and (response1.status_code <= 300):
-            msg_text = pod_ip_list_str + "<br>" + response1.text
+            msg_text = pod_ip_list_str + "<br><br>" + response1.text
         else:
             msg_text = response1.status_code
         # return msg_text
